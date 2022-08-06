@@ -1,28 +1,33 @@
-var programming_languages = [
-	"python",
-	"javascript",
-	"mongodb",
-	"json",
-	"java",
-	"html",
-	"css",
-	"c",
-	"csharp",
-	"golang",
-	"kotlin",
-	"php",
-	"sql",
-	"ruby"
-]
-
 let respuesta = '';
 let maxIntentos = 6;
 let errores = 0;
 let adivinado = [];
 let estPalabra = null;
 
+const url = 'https://palabras-aleatorias-public-api.herokuapp.com/random';
+// const url = 'https://jsonplaceholder.typicode.com/posts';
+var divContiner = document.createElement('div');
+window.addEventListener("load", function (event) {
+  fetch(url)
+    .then(response => response.json())
+    .then(json => {
+      //Convertir palabras con tilde a sin tilde
+      function eliminarDiacriticos(text) {
+        return text?.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      }
+      respuesta = eliminarDiacriticos(json.body.Word)
+      divContiner.innerHTML = json.body.Word
+    })
+  divContiner.id = 'bitymelomama'
+
+});
+
 function palAlet() {
-  respuesta = programming_languages[Math.floor(Math.random() * programming_languages.length)];
+  function ajax() {
+
+  }
+  ajax()
+  // respuesta = programming_languages[Math.floor(Math.random() * programming_languages.length)];
 }
 
 function generateButtons() {
@@ -88,6 +93,7 @@ function reset() {
   document.getElementById('fotoAhorcado').src = './images/0.jpg';
 
   palAlet();
+
   palabrAdivinada();
   updateerrores();
   generateButtons();
@@ -96,20 +102,13 @@ function reset() {
 document.getElementById('maxIntentos').innerHTML = maxIntentos;
 
 palAlet();
-generateButtons();
-palabrAdivinada();
-ajax();
-
-/* function ajax()  {
-  const http = new XMLHttpRequest();
-  const url = 'https://palabras-aleatorias-public-api.herokuapp.com/random';
-  http.onreadystatechange = function(){
-    console.log(this.responseText);
+setTimeout(() => {
+  if (respuesta.length > 1) {
+    generateButtons();
+    palabrAdivinada();
+  } else {
+    alert("No cargo");
   }
-  http.open('GET', url);
-  http.send();
-}
+}, 1500);
 
-fetch('https://palabras-aleatorias-public-api.herokuapp.com/random').then(function(resp){
-  console.log(resp.body);
-}) */
+
