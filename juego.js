@@ -7,7 +7,7 @@ let estPalabra = null;
 const url = 'https://palabras-aleatorias-public-api.herokuapp.com/random';
 // const url = 'https://jsonplaceholder.typicode.com/posts';
 var divContiner = document.createElement('div');
-window.addEventListener("load", function (event) {
+function getPalabra () {
   fetch(url)
     .then(response => response.json())
     .then(json => {
@@ -20,15 +20,10 @@ window.addEventListener("load", function (event) {
     })
   divContiner.id = 'bitymelomama'
 
-});
-
-function palAlet() {
-  function ajax() {
-
-  }
-  ajax()
-  // respuesta = programming_languages[Math.floor(Math.random() * programming_languages.length)];
 }
+window.addEventListener("load",getPalabra  );
+
+
 
 function generateButtons() {
   let buttonsHTML = 'abcdefghijklmnopqrstuvwxyz'.split('').map(letter =>
@@ -88,20 +83,19 @@ function updateerrores() {
 }
 
 function reset() {
+  console.log("hola");
   errores = 0;
   adivinado = [];
   document.getElementById('fotoAhorcado').src = './images/0.jpg';
-
-  palAlet();
-
+  getPalabra();
   palabrAdivinada();
   updateerrores();
   generateButtons();
 }
 
 document.getElementById('maxIntentos').innerHTML = maxIntentos;
+document.getElementById('resetButton')?.addEventListener('click',reset)
 
-palAlet();
 setTimeout(() => {
   if (respuesta.length > 1) {
     generateButtons();
