@@ -109,6 +109,6 @@ setTimeout(() => {
   } else {
     alert("No cargo");
   }
-}, 1500);
+}, 3000);
 
 
